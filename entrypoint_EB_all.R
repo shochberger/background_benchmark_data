@@ -2,22 +2,23 @@
 
 library(argparse)
 
-p <- ArgumentParser()
-p$add_argument("--output_dir", "-o", required=TRUE)
-p$add_argument("--name", "-n", required=TRUE)     # z.B. EB_all
+p <- ArgumentParser(description = "Materialize EB_all SCE for OB")
+p$add_argument("--output_dir", "-o", required=TRUE, help = "Output directory provided by OB")
+p$add_argument("--name", "-n", required=TRUE, help = "Dataset identifier")
+p$add_argument("--source_sce", required = TRUE, help = "Path to source SCE file (local inputs/EB_all.sce.rds")
 args <- p$parse_args()
 
-# Direct path to SCE
-source_file <- "/data/home/hochberger/background_benchmark/code/02_benchmark/data/EB_all/default/EB_all.sce.rds"
 
-# Target path (OB replaces --output_dir and --name)
+# Ensure OB´s output directory exists
 dir.create(args$output_dir, showWarnings=FALSE, recursive=TRUE)
+# OB expects the dataset in this path (defined by YAML outputs)
 out <- file.path(args$output_dir, paste0(args$name, ".sce.rds"))
 
-if (!file.exists(source_file)) {
-  stop("Source SCE not found: ", source_file)
+# Copy source file into provenance tree
+if (!file.exists(args$source_sce)) {
+  stop("Source SCE not found: ", args$source_sce)
 }
-ok <- file.copy(source_file, out, overwrite=TRUE)
+ok <- file.copy(args$source_sce, out, overwrite=TRUE)
 if (!ok) stop("Copy failed")
 
-cat(sprintf("[EB_all data] Provided %s -> %s\n", source_file, out))
+cat(sprintf("[EB_all data] Provided %s -> %s\n", args$source_sce, out))
