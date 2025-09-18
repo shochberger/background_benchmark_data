@@ -5,7 +5,7 @@ library(argparse)
 p <- ArgumentParser(description = "Materialize EB_all SCE for OB")
 p$add_argument("--output_dir", "-o", required=TRUE, help = "Output directory provided by OB")
 p$add_argument("--name", "-n", required=TRUE, help = "Dataset identifier")
-p$add_argument("--source_sce", required = TRUE, help = "Path to source SCE file (local inputs/EB_all.sce.rds")
+p$add_argument("--source_sce", required = FALSE, default = "inputs/EB_all/EB_all.sce.rds", help = "Path to source SCE file (local inputs/EB_all.sce.rds")
 args <- p$parse_args()
 
 
