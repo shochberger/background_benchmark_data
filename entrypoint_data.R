@@ -5,7 +5,8 @@ library(argparse)
 p <- ArgumentParser(description = "Materialize SCE for OB (local files)")
 p$add_argument("--output_dir", "-o", required=TRUE, help = "Output directory provided by OB")
 p$add_argument("--name", "-n", help = "Name of this module")
-p$add_argument("--dataset", required = TRUE, help = "dataset name")
+p$add_argument("--dataset_generator", required = TRUE)
+p$add_argument("--dataset_name", required = TRUE)
 p$add_argument("--source_sce", required = TRUE, help = "Path to source SCE file (local inputs/*.sce.rds")
 args <- p$parse_args()
 
@@ -13,8 +14,9 @@ args <- p$parse_args()
 # Ensure output directory exists
 dir.create(args$output_dir, showWarnings=FALSE, recursive=TRUE)
 
-# OB expects the dataset in this path (defined by YAML outputs)
-out <- file.path(args$output_dir, paste0(args$dataset, ".sce.rds"))
+# OB expects the dataset in this path
+token <- paste(args$dataset_generator, args$dataset_name, sep = "_")
+out <- file.path(args$output_dir, paste0(token, ".sce.rds"))
 
 # Validate and copy
 if (!file.exists(args$source_sce)) {
