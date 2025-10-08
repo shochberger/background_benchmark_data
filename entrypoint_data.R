@@ -14,7 +14,7 @@ args <- p$parse_args()
 dir.create(args$output_dir, showWarnings=FALSE, recursive=TRUE)
 
 # OB expects the dataset in this path (defined by YAML outputs)
-out <- file.path(args$output_dir, paste0(args$dataset_name, ".sce.rds"))
+out <- file.path(args$output_dir, paste0(args$dataset, ".sce.rds"))
 
 # Validate and copy
 if (!file.exists(args$source_sce)) {
