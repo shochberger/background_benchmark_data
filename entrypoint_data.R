@@ -15,7 +15,7 @@ dir.create(args$output_dir, showWarnings=FALSE, recursive=TRUE)
 
 # OB expects the dataset in this path
 #out <- file.path(args$output_dir)
-out <- file.path(args$output_dir, paste0(args$name, ".sce.rds"))
+out <- file.path(args$output_dir, paste0(args$dataset_name, ".sce.rds"))
 
 
 # Validate and copy
