@@ -13,15 +13,16 @@ args <- p$parse_args()
 # Ensure output directory exists
 dir.create(args$output_dir, showWarnings=FALSE, recursive=TRUE)
 
-# OB expects the dataset in this path
+# OB expects the dataset in this path (name == module id)
 out <- file.path(args$output_dir, paste0(args$name, ".sce.rds"))
 
 
-# Validate and copy
+# Basic validation
 if (!file.exists(args$source_sce)) {
   stop("Source SCE not found: ", args$source_sce)
 }
 
+# Copy into OB
 copy_success <- file.copy(args$source_sce, out, overwrite=TRUE)
 if (!copy_success) stop("Copy failed")
 
