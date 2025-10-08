@@ -5,7 +5,7 @@ library(argparse)
 p <- ArgumentParser(description = "Materialize SCE for OB (local files)")
 p$add_argument("--output_dir", "-o", required=TRUE, help = "Output directory provided by OB")
 p$add_argument("--name", "-n", help = "Name of this module")
-p$add_argument("--dataset_name", required = TRUE)
+#p$add_argument("--dataset_name", required = TRUE)
 p$add_argument("--source_sce", required = TRUE, help = "Path to source SCE file (local inputs/*.sce.rds")
 args <- p$parse_args()
 
@@ -14,6 +14,7 @@ args <- p$parse_args()
 dir.create(args$output_dir, showWarnings=FALSE, recursive=TRUE)
 
 # OB expects the dataset in this path
+#out <- file.path(args$output_dir)
 out <- file.path(args$output_dir, paste0(args$name, ".sce.rds"))
 
 
