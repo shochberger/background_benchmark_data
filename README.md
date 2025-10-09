@@ -1,30 +1,32 @@
 ------------------------------------------------------------
 ---                                                      ---
-Omnibenchmark data module for local SCE datasets.
+Omnibenchmark data module (single local SCE dataset)
 ---                                                      ---
 ------------------------------------------------------------
 
-   This module materializes local `.sce.rds` files into OB.
-   Each dataset is defined in the benchmark YAML via `parameters:`.
-  
+   This module materializes a local `.sce.rds` file into OB.
+  `{dataset}` resolves to the data module id in the benchmark yaml.
+   One dataset = one module (e.g. id: EB_all).
+
 ------------------------------------------------------------
- 1) Adding new datasets
+Adding new dataset
 ------------------------------------------------------------
-   Put source SCE locally, e.g: 
+    Put source SCE locally, e.g: 
   /data/home/hochberger/background_benchmark/code/02_benchmark/inputs
   (Any path relative to the benchmark YAML should also work)
   
-  Add new parameter to same data module in benchmark YAML: 
-  parameters: 
-    - values: ["--dataset_name", "", "source_sce", "path/to/sce.rds"]
+  Add a new data module with
+   - values: ["--source_sce", "path/to/.sce.rds"]
   
-  OB will run a separate job for each entry and create a new <params> folder per    dataset. 
-  
-------------------------------------------------------------
- 2) What OB creates
-------------------------------------------------------------
-   out/data/datasets/<params>/sce_local.sce.rds
-   out/data/datasets/<params>/parameters.json
-   out/data/datasets/<params>/sce_local_performance.txt
-  
+  The output stays the same for the whole data stage: 
+  outputs:
+    - id: data.sce
+      path: "{input}/{stage}/{module}/{params}/{dataset}.sce.rds"
 
+------------------------------------------------------------
+Outputs created by OB
+------------------------------------------------------------
+   out/data/EB_all/<params>/EB_all.sce.rds
+   out/data/EB_all/<params>/parameters.json
+   out/data/EB_all/<params>/EB_all_performance.txt
+  
